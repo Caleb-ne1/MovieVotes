@@ -48,15 +48,14 @@ const Navbar = () => {
             Movies
           </a>
 
-          <a href="/movies/create-vote" className="hover:text-gray-300">
+          <a href="" className="hover:text-gray-300">
             voting arena
           </a>
 
-          <a href="/create" className="hover:text-gray-300">
+          <a href="/movies/create-vote" className="hover:text-gray-300">
             Create Poll
           </a>
         </div>
-
 
         {/* User Profile and Menu */}
         <div className="relative">
@@ -68,16 +67,14 @@ const Navbar = () => {
           </button>
           {/* Dropdown Menu */}
           {isProfileOpen && (
-            <div className="absolute right-0 mt-2 bg-gray-700 rounded shadow-lg">
-              <a href="/profile" className="block px-4 py-2 hover:bg-gray-600">
+            <div className="absolute right-0 z-50 mt-2 bg-gray-700 rounded shadow-lg">
+              <a href="/profile" className="block w-40 px-4 py-2 hover:bg-gray-600">
                 My Profile
               </a>
               <a href="/votes" className="block px-4 py-2 hover:bg-gray-600">
                 My Votes
               </a>
-              <a href="/settings" className="block px-4 py-2 hover:bg-gray-600">
-                Settings
-              </a>
+            
               <a
                 href="/logout"
                 className="block px-4 py-2 text-red-500 hover:bg-gray-600"
@@ -99,11 +96,11 @@ const Navbar = () => {
             Movies
           </a>
 
-          <a href="/create-vote" className="hover:text-gray-300">
+          <a href="" className="hover:text-gray-300">
             vote arena
           </a>
 
-          <a href="/create" className="block hover:text-gray-300">
+          <a href="/movies/create-vote" className="block hover:text-gray-300">
             Create Poll
           </a>
         </div>

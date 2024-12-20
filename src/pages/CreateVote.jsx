@@ -77,9 +77,16 @@ const CreateVote = () => {
           {selectedMovies.map((movie) => (
             <li
               key={movie.id}
-              className="flex items-center justify-between p-3 bg-white rounded-md shadow-md"
+              className="flex items-center justify-between p-3"
             >
-              <span>{movie.title}</span>
+              <div className="flex flex-row items-center">
+                <img
+                  src={`${imageBaseURL}${movie.poster_path}`}
+                  alt={movie.title}
+                  className="object-cover w-12 h-16 mr-4"
+                />
+                <span>{movie.title}</span>
+              </div>
               <button
                 onClick={() => removeMovie(movie.id)}
                 className="font-medium text-red-500 hover:text-red-700"
