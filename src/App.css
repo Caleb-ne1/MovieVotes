@@ -1,0 +1,20 @@
+.icon_profile {
+  width: 30px;
+  height: 30px;
+  color: white;
+}
+
+/* loader */
+.loader {
+  border-top-color: transparent; 
+  animation: spin 1.5s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
