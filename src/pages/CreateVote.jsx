@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-const CreateVotePage = () => {
+const CreateVote = () => {
   const [voteName, setVoteName] = useState("");
   const [selectedMovies, setSelectedMovies] = useState([]);
   const [showModal, setShowModal] = useState(false);
@@ -55,11 +55,11 @@ const CreateVotePage = () => {
   };
 
   return (
-    <div className="p-6 bg-gray-100 min-h-screen">
-      <h1 className="text-2xl font-bold mb-4">Create a New Vote</h1>
+    <div className="min-h-screen p-6 bg-gray-100">
+      <h1 className="mb-4 text-2xl font-bold">Create a New Vote</h1>
 
       <div className="mb-4">
-        <label htmlFor="voteName" className="block text-lg font-medium mb-2">
+        <label htmlFor="voteName" className="block mb-2 text-lg font-medium">
           Vote Name
         </label>
         <input
@@ -72,7 +72,7 @@ const CreateVotePage = () => {
       </div>
 
       <div className="mb-4">
-        <h2 className="text-lg font-semibold mb-2">Selected Movies</h2>
+        <h2 className="mb-2 text-lg font-semibold">Selected Movies</h2>
         <ul className="space-y-2">
           {selectedMovies.map((movie) => (
             <li
@@ -82,7 +82,7 @@ const CreateVotePage = () => {
               <span>{movie.title}</span>
               <button
                 onClick={() => removeMovie(movie.id)}
-                className="text-red-500 hover:text-red-700 font-medium"
+                className="font-medium text-red-500 hover:text-red-700"
               >
                 Remove
               </button>
@@ -93,32 +93,32 @@ const CreateVotePage = () => {
 
       <button
         onClick={() => setShowModal(true)}
-        className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+        className="px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700"
       >
         Add Movies
       </button>
 
       <button
         onClick={handleSubmit}
-        className="ml-4 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700"
+        className="px-4 py-2 ml-4 text-white bg-green-600 rounded-md hover:bg-green-700"
       >
         Create Vote
       </button>
 
       {showModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-          <div className="bg-white p-6 rounded-md shadow-lg w-96">
-            <h2 className="text-lg font-semibold mb-4">Search Movies</h2>
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="p-6 bg-white rounded-md shadow-lg w-96">
+            <h2 className="mb-4 text-lg font-semibold">Search Movies</h2>
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search for a movie..."
-              className="w-full px-4 py-2 border rounded-md mb-4 focus:outline-none focus:ring focus:border-blue-300"
+              className="w-full px-4 py-2 mb-4 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
             />
             <button
               onClick={handleSearch}
-              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 mb-4"
+              className="px-4 py-2 mb-4 text-white bg-blue-600 rounded-md hover:bg-blue-700"
             >
               Search
             </button>
@@ -132,13 +132,13 @@ const CreateVotePage = () => {
                     <img
                       src={`${imageBaseURL}${movie.poster_path}`}
                       alt={movie.title}
-                      className="w-12 h-16 object-cover mr-4"
+                      className="object-cover w-12 h-16 mr-4"
                     />
                     <span className="truncate">{movie.title}</span>
                   </div>
                   <button
                     onClick={() => addMovie(movie)}
-                    className="text-green-600 hover:text-green-800 font-medium"
+                    className="font-medium text-green-600 hover:text-green-800"
                   >
                     Add
                   </button>
@@ -147,7 +147,7 @@ const CreateVotePage = () => {
             </ul>
             <button
               onClick={() => setShowModal(false)}
-              className="mt-4 px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700"
+              className="px-4 py-2 mt-4 text-white bg-red-600 rounded-md hover:bg-red-700"
             >
               Close
             </button>
@@ -158,4 +158,4 @@ const CreateVotePage = () => {
   );
 };
 
-export default CreateVotePage;
+export default CreateVote;

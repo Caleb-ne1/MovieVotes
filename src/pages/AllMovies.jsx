@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-impor
+
 const AllMovies = () => {
   const API_KEY = import.meta.env.VITE_APP_TMDB_API_KEY;
   const [movies, setMovies] = useState([]);
@@ -9,7 +9,7 @@ const AllMovies = () => {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
-  //fetch movies, search query
+  //fetch movies, search 
   const fetchMovies = async (searchQuery = "", pageNumber = 1) => {
     const endpoint = searchQuery
       ? `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${searchQuery}&page=${pageNumber}`
@@ -43,7 +43,7 @@ const AllMovies = () => {
 
   return (
     <div className="min-h-screen bg-gray-100">
-      <div className="container mx-auto py-6">
+      <div className="container py-6 mx-auto">
 
         {/* search */}
         <form onSubmit={handleSearch} className="flex justify-center mb-6">
@@ -56,17 +56,17 @@ const AllMovies = () => {
           />
           <button
             type="submit"
-            className="bg-blue-600 text-white px-6 py-2 rounded-r-lg hover:bg-blue-700"
+            className="px-6 py-2 text-white bg-blue-600 rounded-r-lg hover:bg-blue-700"
           >
             Search
           </button>
         </form>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+        <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
           {movies.map((movie) => (
             <div
               key={movie.id}
-              className="bg-white shadow-md rounded-lg overflow-hidden hover:scale-105 transition-transform duration-300"
+              className="overflow-hidden transition-transform duration-300 bg-white rounded-lg shadow-md hover:scale-105"
             >
               <Link to={`/movie/${movie.id}`}>
               <img
@@ -76,14 +76,14 @@ const AllMovies = () => {
                     : "https://via.placeholder.com/500x750?text=No+Image"
                 }
                 alt={movie.title}
-                className="w-full h-64 object-cover"
+                className="object-cover w-full h-64"
               />
               </Link>
               <div className="p-4">
                 <h3 className="text-lg font-semibold text-gray-700 truncate">
                   {movie.title}
                 </h3>
-                <p className="text-sm text-gray-500 mt-2">
+                <p className="mt-2 text-sm text-gray-500">
                   Release Date:{" "}
                   {movie.release_date
                     ? new Date(movie.release_date).toLocaleDateString()
@@ -95,7 +95,7 @@ const AllMovies = () => {
         </div>
 
         {/* Pagination */}
-        <div className="flex justify-center items-center mt-8">
+        <div className="flex items-center justify-center mt-8">
           <button
             onClick={() => handlePageChange("prev")}
             disabled={page === 1}

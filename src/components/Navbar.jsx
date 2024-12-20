@@ -6,8 +6,8 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <nav className="bg-gray-800 text-white shadow-md z-50">
-      <div className="container mx-auto px-4 flex justify-between items-center h-16">
+    <nav className="z-50 text-white bg-gray-800 shadow-md">
+      <div className="container flex items-center justify-between h-16 px-4 mx-auto">
         {/* Hamburger Menu for Mobile */}
         <div className="md:hidden">
           <button
@@ -48,8 +48,8 @@ const Navbar = () => {
             Movies
           </a>
 
-          <a href="/movies" className="hover:text-gray-300">
-            vote arena
+          <a href="/movies/create-vote" className="hover:text-gray-300">
+            voting arena
           </a>
 
           <a href="/create" className="hover:text-gray-300">
@@ -57,14 +57,6 @@ const Navbar = () => {
           </a>
         </div>
 
-        {/* Search Bar */}
-        <div className="hidden md:block">
-          <input
-            type="text"
-            placeholder="Search movies or polls..."
-            className="px-4 py-2 rounded bg-gray-700 text-white border-none focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-        </div>
 
         {/* User Profile and Menu */}
         <div className="relative">
@@ -99,15 +91,15 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="md:hidden bg-gray-800 text-white space-y-2 px-4 py-2">
+        <div className="px-4 py-2 space-y-2 text-white bg-gray-800 md:hidden">
           <a href="/" className="block hover:text-gray-300">
             Home
           </a>
-          <a href="/polls" className="block hover:text-gray-300">
+          <a href="/movies" className="block hover:text-gray-300">
             Movies
           </a>
 
-          <a href="/movies" className="hover:text-gray-300">
+          <a href="/create-vote" className="hover:text-gray-300">
             vote arena
           </a>
 
