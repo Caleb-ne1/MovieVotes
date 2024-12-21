@@ -18,3 +18,9 @@
     transform: rotate(360deg);
   }
 }
+
+@media (max-width:  768px) {
+  .mobile {
+    padding: 10px;
+  }
+}

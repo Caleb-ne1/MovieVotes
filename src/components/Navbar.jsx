@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaRegUserCircle } from "react-icons/fa";
 import supabase from '../supabase/client';
 
@@ -18,7 +18,8 @@ const Navbar = () => {
     } catch (err) {
       console.error("Unexpected error during sign out:", err);
     }
-  }
+  } 
+
   return (
     <nav className="z-50 text-white bg-gray-800 shadow-md">
       <div className="container flex items-center justify-between h-16 px-4 mx-auto">
@@ -62,12 +63,8 @@ const Navbar = () => {
             Movies
           </a>
 
-          <a href="" className="hover:text-gray-300">
-            voting arena
-          </a>
-
-          <a href="/movies/create-vote" className="hover:text-gray-300">
-            Create Poll
+          <a href="/movies/vote" className="hover:text-gray-300">
+            Voting Page
           </a>
         </div>
 
@@ -82,13 +79,13 @@ const Navbar = () => {
           {/* Dropdown Menu */}
           {isProfileOpen && (
             <div className="absolute right-0 z-50 mt-2 bg-gray-700 rounded shadow-lg">
-              <a href="/profile" className="block w-40 px-4 py-2 hover:bg-gray-600">
+              <a
+                href="/profile"
+                className="block w-40 px-4 py-2 hover:bg-gray-600"
+              >
                 My Profile
               </a>
-              <a href="/votes" className="block px-4 py-2 hover:bg-gray-600">
-                My Votes
-              </a>
-            
+              
               <a
                 onClick={handlelogout}
                 className="block px-4 py-2 text-red-500 hover:bg-gray-600"
@@ -103,19 +100,23 @@ const Navbar = () => {
       {/* Mobile Menu */}
       {isMenuOpen && (
         <div className="px-4 py-2 space-y-2 text-white bg-gray-800 md:hidden">
-          <a href="/home" className="block hover:text-gray-300">
+          <a
+            href="/home"
+            className="block hover:text-gray-300 transition-colors duration-300"
+          >
             Home
           </a>
-          <a href="/movies" className="block hover:text-gray-300">
+          <a
+            href="/movies"
+            className="block hover:text-gray-300 transition-colors duration-300"
+          >
             Movies
           </a>
-
-          <a href="" className="hover:text-gray-300">
-            vote arena
-          </a>
-
-          <a href="/movies/create-vote" className="block hover:text-gray-300">
-            Create Poll
+          <a
+            href="/movies/vote"
+            className="block hover:text-gray-300 transition-colors duration-300"
+          >
+            Voting Page
           </a>
         </div>
       )}

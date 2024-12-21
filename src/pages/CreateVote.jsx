@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
+import supabase from "../supabase/client";
 
 const CreateVote = () => {
   const [voteName, setVoteName] = useState("");
+  const [expirationDate, setExpirationDate] = useState("");
   const [selectedMovies, setSelectedMovies] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -10,17 +12,23 @@ const CreateVote = () => {
   const API_KEY = import.meta.env.VITE_APP_TMDB_API_KEY;
   const imageBaseURL = "https://image.tmdb.org/t/p/w200";
 
+  const [token, setToken] = useState(false);
 
-  //handle search
+  // Handle token from session storage
+  useEffect(() => {
+    if (sessionStorage.getItem("token")) {
+      const data = JSON.parse(sessionStorage.getItem("token"));
+      setToken(data);
+    }
+  }, []);
+
   const handleSearch = async () => {
     if (!searchQuery) return;
     try {
       const response = await axios.get(
         `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${searchQuery}&language=en-US&page=1`
       );
-
-      // limit results to 5
-      setSearchResults(response.data.results.slice(0, 5));
+      setSearchResults(response.data.results.slice(0, 5)); // Limit results to 5
     } catch (error) {
       console.error("Error fetching movies:", error);
     }
@@ -34,24 +42,54 @@ const CreateVote = () => {
     setSelectedMovies([...selectedMovies, movie]);
   };
 
-  //remove a movie
   const removeMovie = (movieId) => {
     setSelectedMovies(selectedMovies.filter((movie) => movie.id !== movieId));
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!voteName) return alert("Please enter a name for the vote.");
     if (selectedMovies.length === 0)
       return alert("Please add at least one movie.");
+    if (!expirationDate) return alert("Please set an expiration date.");
 
     const voteData = {
       name: voteName,
-      movies: selectedMovies,
+      expiration_date: expirationDate,
     };
-    console.log("Vote Created:", voteData);
-    alert("Vote successfully created!");
-    setVoteName("");
-    setSelectedMovies([]);
+
+    try {
+      // insert vote into votes table
+      const { data: vote, error: voteError } = await supabase
+        .from("votes")
+        .insert([voteData])
+        .select()
+        .single();
+
+      if (voteError) throw voteError;
+
+      // prepare movie data for insertion
+      const movieData = selectedMovies.map((movie) => ({
+        vote_id: vote.id,
+        movie_id: movie.id,
+        movie_title: movie.title,
+        movie_poster: movie.poster_path,
+      }));
+
+      // insert movies into 'vote_movies' table
+      const { error: moviesError } = await supabase
+        .from("vote_movies")
+        .insert(movieData);
+
+      if (moviesError) throw moviesError;
+
+      alert("Vote successfully created!");
+      setVoteName("");
+      setSelectedMovies([]);
+      setExpirationDate("");
+    } catch (error) {
+      console.error("Error creating vote:", error.message);
+      alert("Failed to create the vote. Please try again.");
+    }
   };
 
   return (
@@ -67,6 +105,22 @@ const CreateVote = () => {
           type="text"
           value={voteName}
           onChange={(e) => setVoteName(e.target.value)}
+          className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
+        />
+      </div>
+
+      <div className="mb-4">
+        <label
+          htmlFor="expirationDate"
+          className="block mb-2 text-lg font-medium"
+        >
+          Expiration Date
+        </label>
+        <input
+          id="expirationDate"
+          type="datetime-local"
+          value={expirationDate}
+          onChange={(e) => setExpirationDate(e.target.value)}
           className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
         />
       </div>
@@ -114,7 +168,7 @@ const CreateVote = () => {
 
       {showModal && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="p-6 bg-white rounded-md shadow-lg w-96">
+          <div className="p-6 bg-white rounded-md shadow-lg w-96 h-96 overflow-auto">
             <h2 className="mb-4 text-lg font-semibold">Search Movies</h2>
             <input
               type="text"

@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import supabase from "../supabase/client";
 
-const SignIn = () => {
+const SignIn = ({setToken}) => {
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -13,7 +14,7 @@ const SignIn = () => {
     setLoading(true);
     setErrorMessage(""); 
     try {
-      const { error } = await supabase.auth.signInWithPassword({
+      const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
@@ -21,6 +22,7 @@ const SignIn = () => {
       if (error) {
         setErrorMessage(error.message);
       } else {
+        setToken(data)
         window.location.href = "/home";
       }
     } catch (err) {

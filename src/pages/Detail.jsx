@@ -46,9 +46,6 @@ const Detail = () => {
   return (
     <div className="bg-gray-100 min-h-screen">
       <main className="p-6">
-        <Link to="/" className="text-blue-600 underline mb-4 inline-block">
-          Back to Home
-        </Link>
         <div className="overflow-hidden mt-6 flex flex-col lg:flex-row">
           <div className="w-full lg:w-1/3 mb-6 lg:mb-0">
             <img

@@ -42,7 +42,7 @@ const AllMovies = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-gray-100 mobile">
       <div className="container py-6 mx-auto">
 
         {/* search */}
