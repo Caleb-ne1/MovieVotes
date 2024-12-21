@@ -41,7 +41,7 @@ const Detail = () => {
     return <div className="text-center text-red-500 mt-4">{error}</div>;
   }
 
-  if (!movie) return <div className="text-center mt-4"><Loader /></div>;
+  if (!movie) return <div><Loader /></div>;
 
   return (
     <div className="bg-gray-100 min-h-screen">

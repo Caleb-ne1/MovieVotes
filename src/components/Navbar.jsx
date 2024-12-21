@@ -1,10 +1,24 @@
 import React, { useState } from "react";
 import { FaRegUserCircle } from "react-icons/fa";
+import supabase from '../supabase/client';
 
 const Navbar = () => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  const handlelogout = async () => {
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) {
+        console.error("Error signing out:", error.message);
+        return;
+      }
+      
+      window.location.href = '/';
+    } catch (err) {
+      console.error("Unexpected error during sign out:", err);
+    }
+  }
   return (
     <nav className="z-50 text-white bg-gray-800 shadow-md">
       <div className="container flex items-center justify-between h-16 px-4 mx-auto">
@@ -34,14 +48,14 @@ const Navbar = () => {
 
         {/* Logo */}
         <div className="text-xl font-bold">
-          <a href="/">MovieVotes</a>
+          <a href="/home">MovieVotes</a>
         </div>
 
         {/* Links for larger screens */}
         <div
           className={`hidden md:flex space-x-6 ${isMenuOpen ? "block" : ""}`}
         >
-          <a href="/" className="hover:text-gray-300">
+          <a href="/home" className="hover:text-gray-300">
             Home
           </a>
           <a href="/movies" className="hover:text-gray-300">
@@ -76,7 +90,7 @@ const Navbar = () => {
               </a>
             
               <a
-                href="/logout"
+                onClick={handlelogout}
                 className="block px-4 py-2 text-red-500 hover:bg-gray-600"
               >
                 Logout
@@ -89,7 +103,7 @@ const Navbar = () => {
       {/* Mobile Menu */}
       {isMenuOpen && (
         <div className="px-4 py-2 space-y-2 text-white bg-gray-800 md:hidden">
-          <a href="/" className="block hover:text-gray-300">
+          <a href="/home" className="block hover:text-gray-300">
             Home
           </a>
           <a href="/movies" className="block hover:text-gray-300">
